@@ -1,0 +1,13 @@
+('case', 'to', 'correspond', 'exactly', 'with', 'all')	1
+('exactly', 'with', 'all', 'the', 'sensations', 'that')	1
+('every', 'case', 'to', 'correspond', 'exactly', 'with')	1
+('to', 'correspond', 'exactly', 'with', 'all', 'the')	1
+('sensations', 'that', 'I', 'have', 'ever', 'felt.')	1
+('correspond', 'exactly', 'with', 'all', 'the', 'sensations')	1
+('all', 'the', 'sensations', 'that', 'I', 'have')	1
+('the', 'sensations', 'that', 'I', 'have', 'ever')	1
+('in', 'every', 'case', 'to', 'correspond', 'exactly')	1
+('with', 'all', 'the', 'sensations', 'that', 'I')	1
+('seems', 'in', 'every', 'case', 'to', 'correspond')	1
+('The', 'diagnosis', 'seems', 'in', 'every', 'case')	1
+('diagnosis', 'seems', 'in', 'every', 'case', 'to')	1

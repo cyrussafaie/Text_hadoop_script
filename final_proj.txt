@@ -1,0 +1,46 @@
+REGISTER hdfs:///jar/elephant-bird/json-simple-1.1.1.jar;
+REGISTER hdfs:///jar/elephant-bird/elephant-bird-core-4.6-SNAPSHOT.jar;
+REGISTER hdfs:///jar/elephant-bird/elephant-bird-pig-4.6-SNAPSHOT.jar;
+REGISTER hdfs:///jar/elephant-bird/elephant-bird-hadoop-compat-4.6-SNAPSHOT.jar;
+REGISTER hdfs:///jar/tutorial.jar;
+
+A = load '/user/kadochnikov/twitter_full/' USING com.twitter.elephantbird.pig.load.JsonLoader('-nestedLoad') as tweets;
+C = FOREACH A GENERATE
+(CHARARRAY)tweets#'id' as id,
+(CHARARRAY)tweets#'lang' AS lang,
+(CHARARRAY)tweets#'created_at' AS created_at,
+(CHARARRAY)tweets#'text' AS text,
+tweets#'user' as user_info,
+tweets#'retweeted_status' as retweet_info,
+tweets#'verified' as verified
+;
+
+D = FOREACH C GENERATE
+id,
+lang,
+created_at,
+(CHARARRAY)user_info#'screen_name' as screen_name,
+(CHARARRAY)user_info#'name' as name,
+(CHARARRAY)user_info#'location' as location,
+(INT)retweet_info#'retweet_count' as retweet_count,
+(INT)verified#'verified' as verif
+REPLACE(text, '\n', ' ') AS text
+;
+
+E = FILTER D BY (location matches '(?i).*chicago.*') and (text matches '(?i).*uchicago.*') or (text matches '(?i).*northwestern.*') or (text matches '(?i).*university of chicago.*'); 
+
+F = limit E 20;
+dump F;
+
+F = limit E 2000;
+rmf /user/hsafaie/FinalProject2
+STORE F INTO '/user/hsafaie/FinalProject2';
+
+
+--hadoop fs -get /user/hsafaie /home/hsafaie/FinalProject2
+
+hadoop fs -get /user/hsafaie/FinalProject2/part-r-00000 /home/hsafaie/twitter 
+
+hadoop fs -cat /user/hsafaie/FinalProject2/part-r-00000 | head
+
+hadoop fs -get /user/hsafaie/FinalProject2/part-r-00000 s

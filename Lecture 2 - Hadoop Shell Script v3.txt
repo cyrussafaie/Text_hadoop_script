@@ -1,0 +1,41 @@
+
+hadoop fs -ls
+hadoop fs -ls Airlines
+hadoop fs -ls /user/kadochnikov/Airlines
+
+
+hadoop fs -mkdir test
+hadoop fs -rm -r test
+
+cd data
+unzip ccount.zip
+
+# put gets the data 
+hadoop fs -put ccount.txt /user/kadochnikov/Dominicks/ccount.txt
+hadoop fs -ls /user/kadochnikov/Dominicks/
+
+# 
+hadoop fs -get /user/hsafaie/cyrus/ccount.txt /home/hsafaie/cyrus/ccount_from_hdfs.txt
+
+hadoop fs -tail /user/kadochnikov/Dominicks/ccount.txt  
+
+hadoop fs -cat /user/kadochnikov/Dominicks/ccount.txt | head
+
+
+ls *hdfs*
+rm ccount_fromhdfs.txt 
+rm ccount.txt
+
+hadoop fs -ls /user/kadochnikov/Dominicks/
+hadoop fs -rm /user/kadochnikov/Dominicks/ccount.txt
+
+
+mapred job -list
+
+----------------
+----------------
+hadoop fs -get /user/hsafaie/FinalProject2/part-r-00000 /home/hsafaie/twitter 
+
+hadoop fs -cat /user/hsafaie/FinalProject2/part-r-00000 | head
+
+hadoop fs -get /user/hsafaie/FinalProject2/part-r-00000 

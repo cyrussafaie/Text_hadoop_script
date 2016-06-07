@@ -1,0 +1,45 @@
+
+
+-- Exercise 10.
+SET hcat.bin /usr/bin/hcat;
+A = load '/user/kadochnikov/Doyle/Adventures_of_Sherlock_Holmes.txt';
+B = foreach A generate flatten(TOKENIZE((chararray)$0)) as word;
+C = group B by word;
+D = foreach C generate group as word, COUNT(B) as word_freq;
+E = order D by word_freq desc;
+describe E;
+
+sql drop table Word_Count_NK_1;
+sql create table Word_Count_NK_1 (word string, word_freq bigint);
+
+STORE E INTO 'Word_Count_NK_1' USING org.apache.hive.hcatalog.pig.HCatStorer();
+
+
+
+
+
+
+-- Exercise 11.
+REGISTER hdfs:///jar/tutorial.jar;
+SET hcat.bin /usr/bin/hcat;
+A = load '/user/kadochnikov/Doyle/Adventures_of_Sherlock_Holmes.txt';
+
+-- Call the ToLower UDF to change the text to lowercase.
+B = FOREACH A GENERATE org.apache.pig.tutorial.ToLower($0) as text;
+
+-- Call the NGramGenerator UDF to compose the n-grams of the query.
+C = FOREACH B GENERATE flatten(org.apache.pig.tutorial.NGramGenerator(text)) as ngram;
+
+-- Group and count n-grams.
+D = GROUP C BY ngram;
+E = FOREACH D GENERATE group as ngram, COUNT(C) as ngrams_freq;
+
+F = order E by ngrams_freq desc;
+
+rmf /user/kadochnikov/Doyle_Out
+STORE F INTO '/user/kadochnikov/Doyle_Out';
+
+
+
+
+
